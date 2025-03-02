@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/jcabezasp2/calculator2.git'
+            }
+        }
+        stage('Compile') {
+            steps {
+                sh './gradlew compileJava'
+            }
+        }
+        stage('Unit Tests') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+    }
+}
