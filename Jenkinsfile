@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'gradle:6.6.1-jre14-openj9'
+            // We mount the Docker socket to allow DinD
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -8,20 +14,14 @@ pipeline {
                     url: 'https://github.com/jcabezasp2/calculator2.git'
             }
         }
-        // Normally I would set the permission in the dockerfile
-        stage('Set Permissions') {
-            steps {
-                sh 'chmod +x gradlew'
-            }
-        }
         stage('Compile') {
             steps {
-                sh './gradlew compileJava'
+                sh 'gradle compileJava'
             }
         }
         stage('Unit Tests') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test'
             }
         }
     }
