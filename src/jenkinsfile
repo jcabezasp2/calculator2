@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/jcabezasp2/calculator2.git'
+                git branch: 'main',
+                    url: 'https://github.com/jcabezasp2/calculator2.git'
             }
         }
         stage('Compile') {
