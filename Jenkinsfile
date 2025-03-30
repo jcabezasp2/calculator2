@@ -1,9 +1,8 @@
 pipeline {
     agent {
-        docker {
-            image 'gradle:6.6.1-jre14-openj9'
-            // We mount the Docker socket to allow DinD
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        dockerfile {
+            filename 'Dockerfile'
+            args '-v $HOME/.gradle:/home/gradle/.gradle'
         }
     }
 
